@@ -7,7 +7,7 @@ const PostsList = () => {
     const posts = useSelector(selectAllPosts)
     const renderedPosts = posts.map(post => (
         <article key={post.id}
-            className='m-8 border-2 border-red-800 p-8 ' >
+            className='m-3 ring-2 rounded bg-gray-700 text-slate-300 ring-green-500  p-8 ' >
             <h3>{post.title}</h3>
             <p>{post.description.substring(0, 100)}</p>
             <p>
@@ -16,9 +16,11 @@ const PostsList = () => {
         </article >
     ))
     return (
-        <section>
+        <section className='ring-2 ring-slate-300 shadow-sm p-5' >
             <h2 className='text-2xl text-center font-medium'>Your posts</h2>
-            {renderedPosts}
+            <div className='grid grid-cols-2'>
+                {renderedPosts}
+            </div>
         </section>
     )
 }

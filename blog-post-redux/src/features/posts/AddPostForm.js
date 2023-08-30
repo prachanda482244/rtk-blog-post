@@ -30,10 +30,10 @@ const AddPostForm = () => {
         </option>
     ))
     return (
-        <section>
+        <section className='p-3'>
             <h2 className='text-center font-medium text-xl my-3'>Add a new post</h2>
-            <form className='ring-2 ring-black  flex flex-col p-5'>
-                <label htmlFor="postTitle">Post Title:</label>
+            <form className='ring-2 ring-sky-700 shadow-lg  w-2/3 mx-auto flex flex-col p-10 rounded '>
+                <label htmlFor="postTitle" className='text-xl text-sky-500 my-2'>Post Title:</label>
                 <input type="text"
                     id='postTitle'
                     name='postTitle'
@@ -41,7 +41,7 @@ const AddPostForm = () => {
                     value={title}
                     onChange={onTitleChange}
                 />
-                <label htmlFor="postAuthor">Author:</label>
+                <label htmlFor="postAuthor" className='text-xl text-sky-500 my-2'>Author:</label>
                 <select
                     className='ring-2 p-2 ring-sky-600 rounded bg-black text-white outline-none'
                     name="postAuthor"
@@ -52,7 +52,7 @@ const AddPostForm = () => {
                     {usersOptions}
                 </select>
 
-                <label htmlFor="postDescription">Descripiton : </label>
+                <label htmlFor="postDescription" className='text-xl text-sky-500 my-2'>Descripiton : </label>
                 <textarea
                     name="postDescription"
                     id="postDescription"
@@ -60,7 +60,7 @@ const AddPostForm = () => {
                     value={description}
                     onChange={onDescriptionChange}
                 />
-                <button type='button' className='bg-sky-400 text-white py-2 px-6 rounded-full outline-none my-2' onClick={onSavedPostClicked}
+                <button type='button' className={`${!canSave ? 'bg-transparent ring-2 text-black my-3' : 'bg-sky-400'}  text-white py-2 px-6 rounded-full outline-none my-2`} onClick={onSavedPostClicked}
                     disabled={!canSave}
                 >Save Post</button>
             </form>
