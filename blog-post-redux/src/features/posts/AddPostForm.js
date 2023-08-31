@@ -60,7 +60,7 @@ const AddPostForm = () => {
                     value={description}
                     onChange={onDescriptionChange}
                 />
-                <button type='button' className={`${!canSave ? 'bg-transparent ring-2 text-black my-3' : 'bg-sky-400'}  text-white py-2 px-6 rounded-full outline-none my-2`} onClick={onSavedPostClicked}
+                <button type='button' className={`${!canSave ? 'bg-transparent ring-2 text-sky-800' : 'bg-sky-400'} text-white py-2 px-6 rounded-full outline-none my-4  `} onClick={onSavedPostClicked}
                     disabled={!canSave}
                 >Save Post</button>
             </form>
