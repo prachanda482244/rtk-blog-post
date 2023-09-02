@@ -31,7 +31,7 @@ const AddPostForm = () => {
     return (
         <section className='p-3'>
             <h2 className='text-center font-medium text-2xl uppercase my-3'>Write a new blog ? Go ahead </h2>
-            <form className='ring-2 ring-sky-700 shadow-lg  w-2/3 mx-auto flex flex-col p-10 rounded '>
+            <form className='ring-2 ring-sky-700 shadow-lg  md:w-2/3 md:mx-auto flex flex-col p-10 rounded '>
                 <label htmlFor="postTitle" className='text-xl text-sky-500 my-2'>Post Title:</label>
                 <input type="text"
                     id='postTitle'

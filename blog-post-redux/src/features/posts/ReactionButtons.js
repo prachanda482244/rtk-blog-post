@@ -18,7 +18,7 @@ const ReactionButtons = ({ post }) => {
             <button
                 key={name}
                 type='button'
-                className='p-2 ring-2 mx-1 rounded-lg ring-sky-400'
+                className='md:p-2 p-1 ring-2 mx-1 rounded-lg ring-sky-400'
                 onClick={() => dispatch(reactionAdded({ postId: post.id, reaction: name }))}
             >
                 {emoji} {post.reactions[name]}
