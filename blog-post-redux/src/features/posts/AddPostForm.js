@@ -1,70 +1,68 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { postAdded } from './postsSlice'
-import { selectAllUsers } from '../users/usersSlice'
+import { addUsers } from '../users/usersSlice'
+import { nanoid } from '@reduxjs/toolkit'
 const AddPostForm = () => {
     const dispatch = useDispatch()
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    const [userId, setUserId] = useState('')
-
-    const users = useSelector(selectAllUsers)
-
+    const [user, setUser] = useState('')
     const onTitleChange = e => setTitle(e.target.value)
     const onDescriptionChange = e => setDescription(e.target.value)
-    const onAuthorChanged = e => setUserId(e.target.value)
+    const onAuthorChanged = e => setUser(e.target.value)
 
-
+    const newUser = {
+        id: nanoid(),
+        name: user,
+    }
     const onSavedPostClicked = () => {
         if (title && description) {
-            dispatch(postAdded(title, description, userId))
+            dispatch(postAdded(title, description, newUser.id))
+            dispatch(addUsers(newUser))
             setTitle('')
             setDescription('')
+            setUser('')
         }
     }
-    const canSave = Boolean(title) && Boolean(description) && Boolean(userId)
+    const canSave = Boolean(title) && Boolean(description) && Boolean(user)
 
-    const usersOptions = users.map(user => (
-        <option key={user.id} value={user.id} className='bg-slate-600 '>
-            {user.name}
-        </option>
-    ))
+
     return (
         <section className='p-3'>
-            <h2 className='text-center font-medium text-xl my-3'>Add a new post</h2>
+            <h2 className='text-center font-medium text-2xl uppercase my-3'>Write a new blog ? Go ahead </h2>
             <form className='ring-2 ring-sky-700 shadow-lg  w-2/3 mx-auto flex flex-col p-10 rounded '>
                 <label htmlFor="postTitle" className='text-xl text-sky-500 my-2'>Post Title:</label>
                 <input type="text"
                     id='postTitle'
                     name='postTitle'
+                    placeholder='Post Title'
                     className='ring-2 ring-purple-5000 rounded p-3'
                     value={title}
                     onChange={onTitleChange}
                 />
                 <label htmlFor="postAuthor" className='text-xl text-sky-500 my-2'>Author:</label>
-                <select
-                    className='ring-2 p-2 ring-sky-600 rounded bg-black text-white outline-none'
-                    name="postAuthor"
-                    id="postAuthor"
-                    value={userId}
-                    onChange={onAuthorChanged}>
-                    <option value="" ></option>
-                    {usersOptions}
-                </select>
+                <input type="text"
+                    placeholder='Author Name'
+                    className='ring-2 ring-purple-5000 rounded p-3'
+
+                    value={user}
+                    onChange={onAuthorChanged} />
 
                 <label htmlFor="postDescription" className='text-xl text-sky-500 my-2'>Descripiton : </label>
                 <textarea
                     name="postDescription"
                     id="postDescription"
+                    placeholder='Post Description'
                     className='ring-2 ring-purple-5000 rounded p-3'
                     value={description}
                     onChange={onDescriptionChange}
                 />
-                <button type='button' className={`${!canSave ? 'bg-transparent ring-2 text-sky-800' : 'bg-sky-400'} text-white py-2 px-6 rounded-full outline-none my-4  `} onClick={onSavedPostClicked}
+                <button type='button' className={`${!canSave ? 'bg-transparent ring-2 text-sky-600' : 'bg-sky-400'} text-white py-2 px-6 rounded-full outline-none my-4  `} onClick={onSavedPostClicked}
                     disabled={!canSave}
-                >Save Post</button>
+                >Add blog</button>
             </form>
-        </section>
+        </section >
     )
 }
 

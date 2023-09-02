@@ -1,70 +1,20 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
-import { sub } from 'date-fns'
-const initialState = [
-    {
-        id: '1',
-        title: 'Learn React',
-        description: 'Learning react will help to make single page application',
-        date: sub(new Date(), { minutes: 10 }).toISOString(),
-        reactions: {
-            thumbsUp: 0,
-            wow: 0,
-            heart: 0,
-            rocket: 0,
-            coffee: 0
-        }
 
-    },
-    {
-        id: '2',
-        title: 'Learn Redux',
-        description: 'Learning redux will help to manage the state',
-        date: sub(new Date(), { minutes: 5 }).toISOString(),
-        reactions: {
-            thumbsUp: 0,
-            wow: 0,
-            heart: 0,
-            rocket: 0,
-            coffee: 0
-        }
-    },
-    {
-        id: '3',
-        title: 'Learn Javascript',
-        description: 'Learn javascript to make the fully functional websites',
-        date: sub(new Date(), { minutes: 15 }).toISOString(),
-        reactions: {
-            thumbsUp: 0,
-            wow: 0,
-            heart: 0,
-            rocket: 0,
-            coffee: 0
-        }
+// Define a localStorage key for your posts data
+const localStorageKey = "blog";
 
+// Try to load posts data from localStorage, or use an empty array as initial state
+const initialState = JSON.parse(localStorage.getItem(localStorageKey)) || [];
 
-    },
-    {
-        id: '4',
-        title: 'Learn Next js',
-        description: 'Next js is the javascript framework which help to write react code even better', userId: '1',
-        date: sub(new Date(), { minutes: 20 }).toISOString(),
-        reactions: {
-            thumbsUp: 0,
-            wow: 0,
-            heart: 0,
-            rocket: 0,
-            coffee: 0
-        }
-
-    },
-]
 const postsSlice = createSlice({
     name: 'posts',
     initialState,
     reducers: {
         postAdded: {
             reducer: (state, action) => {
-                state.push(action.payload)
+                state.push(action.payload);
+                // Save the updated state to localStorage
+                localStorage.setItem(localStorageKey, JSON.stringify(state));
             },
             prepare(title, description, userId) {
                 return {
@@ -82,18 +32,27 @@ const postsSlice = createSlice({
                             coffee: 0
                         }
                     }
-                }
+                };
             }
         },
         reactionAdded: (state, action) => {
-            const { postId, reaction } = action.payload
-            const existingPost = state.find(post => post.id === postId)
+            const { postId, reaction } = action.payload;
+            const existingPost = state.find(post => post.id === postId);
             if (existingPost) {
-                existingPost.reactions[reaction]++
+                existingPost.reactions[reaction]++;
+                // Save the updated state to localStorage
+                localStorage.setItem(localStorageKey, JSON.stringify(state));
             }
+        },
+        deletePost: (state, action) => {
+            const postIdToDelete = action.payload;
+            const updatedState = state.filter(post => post.id !== postIdToDelete);
+            localStorage.setItem(localStorageKey, JSON.stringify(updatedState));
+            return updatedState;
         }
     }
-})
-export const selectAllPosts = (state) => state.posts
-export const { postAdded, reactionAdded } = postsSlice.actions
-export default postsSlice.reducer
+});
+
+export const selectAllPosts = (state) => state.posts;
+export const { postAdded, reactionAdded, deletePost } = postsSlice.actions;
+export default postsSlice.reducer;
