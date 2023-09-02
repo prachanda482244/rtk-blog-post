@@ -17,7 +17,7 @@ const PostsList = () => {
             className='m-3 ring-2 rounded bg-gray-700 relative text-slate-300 ring-green-500  p-8 ' >
             <h3 className='text-2xl font-medium capitalize'>{post.title}</h3>
             <p>{post.description.substring(0, 100)}</p>
-            <p className='flex justify-between my-3 items-center'>
+            <p className='flex justify-between sm:text-sm md:text-base my-3 items-center'>
                 <PostAuthor userId={post.userId} />
                 <TimeAgo timeStamp={post.date} />
             </p>
